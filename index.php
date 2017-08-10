@@ -75,7 +75,7 @@ $app->post('/noticias', function (Request $request, Response $response) {
 				$Categoria,
 				'$NumeroPagina',
 				'$Autor',
-				$Fecha,
+				'$Fecha',
 				'$Hora',
 				'$Titulo',
 				'$Encabezado',

@@ -10,7 +10,7 @@ $config['db']['user']   = "root";
 $config['db']['pass']   = "Gaddp552014";
 $config['db']['dbname'] = "monitoreoGa";
 $config['db']['charset']= "utf8";
-$config['db']['port']	= "3307";
+$config['db']['port']	= "3306";
 
 $app = new \Slim\App(["settings" => $config]);
 $container = $app->getContainer();
@@ -22,6 +22,19 @@ $container['db'] = function ($c) {
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
 };
+
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+	return $response;
+});
+
+$app->add(function ($req, $res, $next) {
+	$response = $next($req, $res);
+	return $response
+		->withHeader('Access-Control-Allow-Origin', 'http://localhost')
+		->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+		->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+});
+
 
 $app->post('/noticias', function (Request $request, Response $response) {
 	$noti=json_decode($request->getBody())->dsNoticias->ttNotiMstr[0];

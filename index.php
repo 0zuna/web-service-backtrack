@@ -30,7 +30,7 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
 $app->add(function ($req, $res, $next) {
 	$response = $next($req, $res);
 	return $response
-		->withHeader('Access-Control-Allow-Origin', 'http://localhost')
+		->withHeader('Access-Control-Allow-Origin', '*')
 		->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
 		->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
@@ -48,7 +48,7 @@ $app->post('/noticias', function (Request $request, Response $response) {
 	$Texto=$noti->cNotiCuerTxt;
 	$Periodico=(int) $noti->iMediClv;
 	$Estatus=$noti->cMoniSts;
-	$Fecha=date("Y-m-d"); 
+	$Fecha=$noti->daNotiCaptFec; 
 	$Hora=date("H:i:s");
 	if (array_key_exists('ttNotiDetl', $noti)) {
 		$haruka = array_map(function($obj) { return $obj->cNotiCuerTxt; },$noti->ttNotiDetl);
